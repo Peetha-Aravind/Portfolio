@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Portfolio | Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#050505',
+                        neon: {
+                            cyan: '#00f3ff',
+                            purple: '#bc13fe',
+                            blue: '#003cff'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, filter: 'drop-shadow(0 0 10px rgba(0, 243, 255, 0.5))' },
+                            '50%': { opacity: .7, filter: 'drop-shadow(0 0 20px rgba(0, 243, 255, 0.8))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Overrides */
+        body {
+            background-color: #0f1115;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(15, 17, 21, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Neon Glow Effects */
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+        
+        .neon-border-cyan {
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.5);
+        }
+
+        .hover-neon:hover {
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.5), inset 0 0 10px rgba(188, 19, 254, 0.2);
+            border-color: #bc13fe;
+            transform: translateY(-2px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1115;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+            box-shadow: 0 0 10px #8b5cf6;
+        }
+
+        /* Typing cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #60a5fa;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Fade in on scroll utility */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-purple-500 selection:text-white bg-[#0f1115] bg-grid font-sans">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300 py-4" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                Portfolio
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#skills" class="hover:text-white transition-colors">Tech</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#certificates" class="hover:text-white transition-colors">Certificates</a>
+                <a href="#resume" class="hover:text-white transition-colors">Resume</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-gray-300 hover:text-white focus:outline-none" id="mobile-menu-btn">
+                <i class="ph ph-list text-3xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden glass-panel absolute top-full left-0 w-full flex flex-col items-center py-6 space-y-4 text-lg border-t-0" id="mobile-menu">
+            <a href="#about" class="text-gray-300 hover:text-white mobile-link">About</a>
+            <a href="#skills" class="text-gray-300 hover:text-white mobile-link">Tech</a>
+            <a href="#projects" class="text-gray-300 hover:text-white mobile-link">Projects</a>
+            <a href="#certificates" class="text-gray-300 hover:text-white mobile-link">Certificates</a>
+            <a href="#resume" class="text-gray-300 hover:text-white mobile-link">Resume</a>
+            <a href="#contact" class="text-gray-300 hover:text-white mobile-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Content -->
+            <div class="flex flex-col items-start text-left order-2 lg:order-1">
+                <span class="text-gray-400 tracking-[0.2em] text-sm mb-4 font-sans uppercase">Hello, I'm</span>
+                <h1 class="text-7xl md:text-8xl font-bold mb-4 tracking-tight">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 pb-2">Aravind</span>
+                </h1>
+                
+                <p class="text-2xl text-blue-400 mb-6 font-medium h-8">
+                    <span id="typewriter" class="typing-cursor"></span>
+                </p>
+
+                <p class="text-gray-400 text-lg mb-10 max-w-xl leading-relaxed font-light">
+                    I build scalable, high-performance web applications with modern technologies. Passionate about crafting seamless digital experiences that blend design and engineering.
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <a href="#projects" class="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium hover:opacity-90 transition-opacity flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                        View Projects <i class="ph ph-arrow-up-right"></i>
+                    </a>
+                    <a href="#resume" class="px-8 py-3 rounded-lg bg-[#1a1c23] border border-white/10 text-white font-medium hover:bg-white/5 transition-colors flex items-center gap-2">
+                        Download Resume <i class="ph ph-download-simple"></i>
+                    </a>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-[#1a1c23] flex items-center justify-center text-gray-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">
+                        <i class="ph ph-github-logo text-xl"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-[#1a1c23] flex items-center justify-center text-gray-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">
+                        <i class="ph ph-linkedin-logo text-xl"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-[#1a1c23] flex items-center justify-center text-gray-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">
+                        <i class="ph ph-facebook-logo text-xl"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-[#1a1c23] flex items-center justify-center text-gray-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">
+                        <i class="ph ph-phone text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Content (Photo) -->
+            <div class="flex justify-center lg:justify-end order-1 lg:order-2 mb-10 lg:mb-0">
+                <div class="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_60px_rgba(56,189,248,0.4),0_0_100px_rgba(168,85,247,0.3)] flex items-center justify-center">
+                    <img src="C:\Users\kodal\OneDrive\Desktop\aravind .jpeg" alt="Aravind Profile" class="w-[98%] h-[98%] object-cover object-center rounded-full border-[6px] border-[#0f1115] z-10">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 relative z-10">
+        <div class="max-w-5xl mx-auto fade-in-section">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">About <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Me</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    A passionate student and aspiring developer exploring the world of full-stack development and modern technologies.
+                </p>
+            </div>
+
+            <!-- Content Card -->
+            <div class="bg-[#15171e] border border-white/5 rounded-2xl p-8 md:p-14 shadow-2xl">
+                <p class="text-gray-400 leading-relaxed text-lg mb-16">
+                    I'm a student with a strong interest in building web applications and learning new technologies. I enjoy working across the full stack, from crafting intuitive user interfaces to building robust backend systems. I'm constantly learning, experimenting with new tools, and working on projects that help me grow as a developer.
+                </p>
+
+                <!-- Hidden SVG definition for the gradient stroke matching the image -->
+                <svg width="0" height="0" class="hidden">
+                    <defs>
+                        <linearGradient id="circle-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6" /> <!-- Blue -->
+                            <stop offset="100%" stop-color="#a855f7" /> <!-- Purple -->
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Frontend Skills -->
+                    <div>
+                        <h3 class="text-[#3b82f6] font-bold tracking-[0.2em] text-sm uppercase mb-8">Frontend</h3>
+                        <div class="flex justify-between items-center gap-2">
+                            
+                            <!-- HTML Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="25.12" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">90%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm">HTML</span>
+                            </div>
+
+                            <!-- CSS Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">85%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm">CSS</span>
+                            </div>
+
+                            <!-- JavaScript Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="30.14" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">88%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm">JavaScript</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Backend Skills -->
+                    <div>
+                        <h3 class="text-[#3b82f6] font-bold tracking-[0.2em] text-sm uppercase mb-8">Backend</h3>
+                        <div class="flex justify-between items-center gap-2">
+                            
+                            <!-- Node.js Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="30.14" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">88%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm text-center">Node.js / Express</span>
+                            </div>
+
+                            <!-- Python Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="50.24" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">80%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm text-center">Python / Django</span>
+                            </div>
+
+                            <!-- GraphQL Progress -->
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="8" fill="none" />
+                                        <circle cx="50" cy="50" r="40" stroke="url(#circle-gradient)" stroke-width="8" fill="none" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-white font-bold text-base md:text-lg">75%</span>
+                                    </div>
+                                </div>
+                                <span class="mt-4 text-gray-400 text-sm text-center">GraphQL</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="skills" class="py-24 px-6 relative z-10">
+        <div class="max-w-5xl mx-auto fade-in-section">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">Tech <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Stack</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Technologies I work with daily to build robust applications.
+                </p>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                
+                <!-- Skill Card: C -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">🔤</span>
+                    <span class="text-white font-bold text-sm tracking-wide">C</span>
+                </div>
+                
+                <!-- Skill Card: C++ -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">⚙️</span>
+                    <span class="text-white font-bold text-sm tracking-wide">C++</span>
+                </div>
+
+                <!-- Skill Card: Java -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">☕</span>
+                    <span class="text-white font-bold text-sm tracking-wide">Java</span>
+                </div>
+
+                <!-- Skill Card: Python -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">🐍</span>
+                    <span class="text-white font-bold text-sm tracking-wide">Python</span>
+                </div>
+
+                <!-- Skill Card: DBMS -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">🗄️</span>
+                    <span class="text-white font-bold text-sm tracking-wide">DBMS</span>
+                </div>
+
+                <!-- Skill Card: ADS -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">📊</span>
+                    <span class="text-white font-bold text-sm tracking-wide">ADS</span>
+                </div>
+
+                <!-- Skill Card: HTML -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">🌐</span>
+                    <span class="text-white font-bold text-sm tracking-wide">HTML</span>
+                </div>
+
+                <!-- Skill Card: CSS -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">🎨</span>
+                    <span class="text-white font-bold text-sm tracking-wide">CSS</span>
+                </div>
+
+                <!-- Skill Card: JavaScript -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl flex flex-col items-center justify-center py-8 px-4 hover:border-white/10 hover:bg-white/[0.02] transition-all hover:-translate-y-1 hover:shadow-lg cursor-pointer group">
+                    <span class="text-4xl mb-4 transform group-hover:scale-110 transition-transform">⚡</span>
+                    <span class="text-white font-bold text-sm tracking-wide">JavaScript</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto fade-in-section">
+            <div class="flex items-center gap-4 mb-16">
+                <h2 class="text-3xl md:text-4xl font-tech font-bold text-white uppercase tracking-wider">03. Archives<span class="text-neon-cyan">_</span></h2>
+                <div class="h-[1px] flex-grow bg-gradient-to-r from-neon-cyan/50 to-transparent"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-panel rounded-xl overflow-hidden group border border-white/10 hover:border-neon-cyan transition-all duration-500">
+                    <div class="h-48 bg-gray-800 relative overflow-hidden">
+                        <!-- Holographic placeholder image effect -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900 to-black opacity-80 z-10"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] z-20 mix-blend-overlay"></div>
+                        <div class="absolute inset-0 flex items-center justify-center z-30">
+                            <i class="ph ph-cube text-5xl text-neon-cyan opacity-50 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                        <!-- Decorative corner -->
+                        <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-neon-cyan opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-tech text-xl font-bold text-white group-hover:text-neon-cyan transition-colors">Quantum UI Kit</h3>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="ph ph-arrow-up-right text-xl"></i></a>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">A comprehensive component library designed for next-generation web applications, featuring glassmorphism and micro-interactions.</p>
+                        <div class="flex gap-2 text-xs font-tech text-neon-cyan">
+                            <span class="px-2 py-1 bg-neon-cyan/10 rounded-sm">React</span>
+                            <span class="px-2 py-1 bg-neon-cyan/10 rounded-sm">Tailwind</span>
+                            <span class="px-2 py-1 bg-neon-cyan/10 rounded-sm">Framer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-panel rounded-xl overflow-hidden group border border-white/10 hover:border-neon-purple transition-all duration-500">
+                    <div class="h-48 bg-gray-800 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 to-black opacity-80 z-10"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] z-20 mix-blend-overlay"></div>
+                        <div class="absolute inset-0 flex items-center justify-center z-30">
+                            <i class="ph ph-chart-polar text-5xl text-neon-purple opacity-50 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                         <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-neon-purple opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-tech text-xl font-bold text-white group-hover:text-neon-purple transition-colors">Neural Dash</h3>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="ph ph-arrow-up-right text-xl"></i></a>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Real-time data visualization dashboard monitoring artificial intelligence training nodes across a distributed network.</p>
+                        <div class="flex gap-2 text-xs font-tech text-neon-purple">
+                            <span class="px-2 py-1 bg-neon-purple/10 rounded-sm">Vue.js</span>
+                            <span class="px-2 py-1 bg-neon-purple/10 rounded-sm">D3.js</span>
+                            <span class="px-2 py-1 bg-neon-purple/10 rounded-sm">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-panel rounded-xl overflow-hidden group border border-white/10 hover:border-blue-500 transition-all duration-500">
+                    <div class="h-48 bg-gray-800 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-800 to-black opacity-80 z-10"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] z-20 mix-blend-overlay"></div>
+                        <div class="absolute inset-0 flex items-center justify-center z-30">
+                            <i class="ph ph-planet text-5xl text-blue-500 opacity-50 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                         <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-tech text-xl font-bold text-white group-hover:text-blue-500 transition-colors">Cyber_Commerce</h3>
+                            <a href="#" class="text-gray-400 hover:text-white"><i class="ph ph-arrow-up-right text-xl"></i></a>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">A futuristic headless e-commerce storefront with 3D product rendering and seamless crypto-payment integration.</p>
+                        <div class="flex gap-2 text-xs font-tech text-blue-500">
+                            <span class="px-2 py-1 bg-blue-500/10 rounded-sm">Next.js</span>
+                            <span class="px-2 py-1 bg-blue-500/10 rounded-sm">Three.js</span>
+                            <span class="px-2 py-1 bg-blue-500/10 rounded-sm">Stripe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 text-gray-400 hover:text-neon-cyan font-tech tracking-wider transition-colors border-b border-transparent hover:border-neon-cyan pb-1">
+                    ACCESS_FULL_REPOSITORY <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto fade-in-section">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">My <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Certificates</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Professional certifications and achievements.
+                </p>
+            </div>
+
+            <!-- Certificates Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Certificate 1: n8n -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group flex flex-col">
+                    <div class="h-52 w-full relative overflow-hidden bg-[#0f1115] flex items-center justify-center border-b border-white/5">
+                        <img src="C:\Users\kodal\OneDrive\Desktop\certificate3.jpeg" alt="n8n Automation Workshop Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-500/10">
+                                ACE - Association of Computer Engineers
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-white mb-3">n8n Automation Workshop</h3>
+                        
+                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">
+                            Participated in "Let's Automate with n8n" — a 2-day hands-on workshop organized by...
+                        </p>
+                        
+                        <div class="text-gray-500 text-xs font-tech tracking-wider">
+                            2024
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate 2: Xcelerate -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group flex flex-col">
+                    <div class="h-52 w-full relative overflow-hidden bg-[#0f1115] flex items-center justify-center border-b border-white/5">
+                        <img src="C:\Users\kodal\OneDrive\Desktop\certificate2.jpeg" alt="Xcelerate Participation Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-500/10">
+                                ACE - Association of Computer Engineers
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-white mb-3">Xcelerate Participation</h3>
+                        
+                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">
+                            Actively participated in Xcelerate, organized by the Department of Computer Science...
+                        </p>
+                        
+                        <div class="text-gray-500 text-xs font-tech tracking-wider">
+                            2024
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate 3: ATS Resume -->
+                <div class="bg-[#15171e] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group flex flex-col">
+                    <div class="h-52 w-full relative overflow-hidden bg-[#0f1115] flex items-center justify-center border-b border-white/5">
+                        <img src="C:\Users\kodal\OneDrive\Desktop\certificate1.jpeg" alt="ATS Resume Achievement Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-500/10">
+                                SRKR Engineering College
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-white mb-3">ATS Resume Achievement</h3>
+                        
+                        <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">
+                            Actively participated and crafted a resume during the Xcelerate event, organized by...
+                        </p>
+                        
+                        <div class="text-gray-500 text-xs font-tech tracking-wider">
+                            2024
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-24 px-6 relative z-10 border-t border-white/5 bg-black/20">
+        <div class="max-w-5xl mx-auto fade-in-section">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">My <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Resume</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+                    My professional journey and qualifications.
+                </p>
+                <a href="C:\Users\kodal\OneDrive\Desktop\resume.jpeg" download class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-xl hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all duration-300">
+                    Download Resume <i class="ph ph-download-simple text-xl"></i>
+                </a>
+            </div>
+
+            <!-- Timeline Container -->
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Center Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-[#8b5cf6] via-[#3b82f6] to-[#8b5cf6] opacity-50 z-0"></div>
+
+                <!-- Timeline Item 1: Internship -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <!-- Left Side Content -->
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pr-10 flex justify-start md:justify-end">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">EXPERIENCE</span>
+                            <h3 class="text-white font-bold text-xl mb-1">Web Development Intern</h3>
+                            <p class="text-gray-400 text-sm mb-2">Thought-Waves Private Limited Solutions</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">June – November 2024</p>
+                            
+                            <!-- Toggle Button for details -->
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <!-- Hidden Details -->
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Gained hands-on experience in full-stack web development, learning modern technologies and translating designs into responsive user interfaces.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Center Dot -->
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-purple-400 shadow-[0_0_15px_#a855f7] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <!-- Empty Right Space on Desktop -->
+                    <div class="hidden md:block w-[45%]"></div>
+                </div>
+
+                <!-- Timeline Item 2: Project -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <!-- Empty Left Space on Desktop -->
+                    <div class="hidden md:block w-[45%]"></div>
+                    <!-- Center Dot -->
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#60a5fa] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <!-- Right Side Content -->
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pl-10 flex justify-start">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">EXPERIENCE</span>
+                            <h3 class="text-white font-bold text-xl mb-1">Virtual Mouse (Python)</h3>
+                            <p class="text-gray-400 text-sm mb-2">Personal Project</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">Python, VR Technology</p>
+                            
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                A virtual mouse refers to an immersive viewing experience created using virtual reality (VR) technology. It is controlled dynamically working on hand gestures.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3: B.Tech Education -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pr-10 flex justify-start md:justify-end">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">EDUCATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">B.Tech in Computer Science & Engineering</h3>
+                            <p class="text-gray-400 text-sm mb-2">SRKR, Bhimavaram</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2024 – 2028 (Expected)</p>
+                            
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Focusing on software development, problem solving, Java, Python programming, and data-structures in real-world applications.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-purple-400 shadow-[0_0_15px_#a855f7] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="hidden md:block w-[45%]"></div>
+                </div>
+
+                <!-- Timeline Item 4: Diploma Education -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="hidden md:block w-[45%]"></div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#60a5fa] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pl-10 flex justify-start">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">EDUCATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">Diploma</h3>
+                            <p class="text-gray-400 text-sm mb-2">AANM & VVRSR Polytechnic College, Gudlavalleru</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2022 – 2025</p>
+
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Graduated with an exceptional 91% grade.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5: SSC Education -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pr-10 flex justify-start md:justify-end">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">EDUCATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">SSC</h3>
+                            <p class="text-gray-400 text-sm mb-2">Sri Vijaya High School, Challapalli</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2022</p>
+                            
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Graduated with an exceptional 92% grade.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-purple-400 shadow-[0_0_15px_#a855f7] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="hidden md:block w-[45%]"></div>
+                </div>
+
+                <!-- Timeline Item 6: AI Tools Workshop -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="hidden md:block w-[45%]"></div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#60a5fa] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pl-10 flex justify-start">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">CERTIFICATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">AI Tools Workshop</h3>
+                            <p class="text-gray-400 text-sm mb-2">Certificate</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2025</p>
+
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Earned a certificate for participating in the AI Tools Workshop.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 7: Power BI Workshop -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pr-10 flex justify-start md:justify-end">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">CERTIFICATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">Power BI Workshop</h3>
+                            <p class="text-gray-400 text-sm mb-2">Certificate</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2025</p>
+                            
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Completed the Power BI workshop, gaining hands-on experience in data visualization and analytics.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-purple-400 shadow-[0_0_15px_#a855f7] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="hidden md:block w-[45%]"></div>
+                </div>
+
+                <!-- Timeline Item 8: N8N Workshop -->
+                <div class="relative w-full flex flex-col md:flex-row justify-between items-start md:items-center mb-12 group">
+                    <div class="hidden md:block w-[45%]"></div>
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-blue-400 shadow-[0_0_15px_#60a5fa] border-2 border-[#0f1115] z-20 mt-8 md:mt-0 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="w-full md:w-[45%] ml-12 md:ml-0 md:pl-10 flex justify-start">
+                        <div class="bg-[#15171e] border border-white/5 rounded-2xl p-6 w-full text-left hover:border-white/10 transition-all hover:-translate-y-1 hover:shadow-xl relative z-10">
+                            <span class="bg-[#1e3a8a]/30 text-blue-400 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full inline-block mb-3 border border-blue-500/10">CERTIFICATION</span>
+                            <h3 class="text-white font-bold text-xl mb-1">N8N Workshop</h3>
+                            <p class="text-gray-400 text-sm mb-2">Certificate</p>
+                            <p class="text-gray-500 text-xs font-mono mb-4">2025</p>
+
+                            <div class="text-blue-400 text-xs flex items-center gap-1 cursor-pointer select-none font-bold" onclick="const content = this.nextElementSibling; const icon = this.querySelector('i'); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180');">
+                                <i class="ph-fill ph-caret-down transition-transform duration-300"></i> More
+                            </div>
+                            <div class="hidden mt-3 text-gray-400 text-sm border-t border-white/10 pt-3 leading-relaxed">
+                                Earned a certificate for participating in the Let's Automate with N8N hands-on workshop.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 border-t border-white/5 relative z-10">
+        <div class="max-w-5xl mx-auto fade-in-section text-center">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">Get In <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Touch</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Have a project in mind? Let's work together.
+                </p>
+            </div>
+            
+            <form id="contact-form" class="bg-[#15171e] border border-white/5 rounded-2xl p-8 md:p-12 shadow-2xl text-left max-w-2xl mx-auto relative overflow-hidden">
+
+                <div class="mb-6">
+                    <label class="block font-bold text-sm text-white mb-3 tracking-wide">Name</label>
+                    <input type="text" required class="w-full bg-[#0f1115] border border-white/5 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-light placeholder-gray-600" placeholder="Your name">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block font-bold text-sm text-white mb-3 tracking-wide">Email</label>
+                    <input type="email" required class="w-full bg-[#0f1115] border border-white/5 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-light placeholder-gray-600" placeholder="Your email">
+                </div>
+
+                <div class="mb-8">
+                    <label class="block font-bold text-sm text-white mb-3 tracking-wide">Message</label>
+                    <textarea required rows="5" class="w-full bg-[#0f1115] border border-white/5 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-light resize-none placeholder-gray-600" placeholder="Your message"></textarea>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-xl hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all duration-300">
+                    <span>Send Message</span>
+                    <i class="ph ph-paper-plane-right text-xl"></i>
+                </button>
+                
+                <!-- Success Message UI (Hidden by default) -->
+                <div id="success-msg" class="hidden absolute inset-0 bg-[#15171e]/95 backdrop-blur-sm flex-col items-center justify-center z-10 rounded-2xl">
+                    <i class="ph-fill ph-check-circle text-6xl text-purple-500 mb-4 animate-pulse-glow"></i>
+                    <p class="font-bold text-xl text-white tracking-wide">Message Sent Successfully!</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10 relative z-10 bg-black text-center">
+        <p class="font-tech text-gray-500 text-sm tracking-widest">
+            &copy; <span id="year"></span> NEXUS_PORTFOLIO. All systems operational.
+        </p>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'shadow-neon-cyan/5');
+                navbar.style.background = 'rgba(15, 17, 21, 0.9)';
+            } else {
+                navbar.classList.remove('shadow-lg', 'shadow-neon-cyan/5');
+                navbar.style.background = 'rgba(15, 17, 21, 0.8)';
+            }
+        });
+
+        // Typewriter Effect
+        const words = ["Systems Engineer", "Full Stack Developer", "Software Engineer"];
+        let i = 0;
+        let timer;
+        let isDeleting = false;
+        let txt = '';
+        const speed = 100;
+        const deleteSpeed = 50;
+        const delay = 2000;
+
+        function typeWriter() {
+            const currentWord = words[i % words.length];
+            
+            if (isDeleting) {
+                txt = currentWord.substring(0, txt.length - 1);
+            } else {
+                txt = currentWord.substring(0, txt.length + 1);
+            }
+
+            document.getElementById("typewriter").textContent = txt;
+
+            let typeSpeed = isDeleting ? deleteSpeed : speed;
+
+            if (!isDeleting && txt === currentWord) {
+                typeSpeed = delay;
+                isDeleting = true;
+            } else if (isDeleting && txt === '') {
+                isDeleting = false;
+                i++;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+        
+        // Start typing effect
+        setTimeout(typeWriter, 1000);
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Form Submission Simulation
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const successMsg = document.getElementById('success-msg');
+            
+            // Show loading state
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> <span>Sending...</span>';
+            
+            setTimeout(() => {
+                successMsg.classList.remove('hidden');
+                successMsg.classList.add('flex');
+                this.reset();
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    successMsg.classList.add('hidden');
+                    successMsg.classList.remove('flex');
+                    btn.innerHTML = `
+                        <span>Send Message</span>
+                        <i class="ph ph-paper-plane-right text-xl"></i>
+                    `;
+                }, 3000);
+            }, 1500);
+        });
+
+    </script>
+</body>
+</html>
